@@ -1,0 +1,16 @@
+{
+  "name": "fixgpt-analyzer",
+  "version": "0.1.0",
+  "description": "Static Solidity security analyzer for Smart Contract FixGPT",
+  "type": "module",
+  "main": "analyzer.js",
+  "exports": {
+    ".": "./analyzer.js"
+  },
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "@solidity-parser/parser": "^0.20.2"
+  }
+}
