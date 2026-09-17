@@ -322,230 +322,114 @@ function fixArithmetic(
 function fixExternalCall(
   sourceCode: string
 ): FixResult {
-  /*
-   * SCF-004 fixer
-   *
-   * Uses the complete source string rather than relying on one
-   * Solidity statement per line. This makes the fixer work for
-   * both normally formatted Solidity and minified/single-line code.
-   *
-   * The fixer only moves an obvious state assignment that occurs
-   * after a low-level call. The external call itself is preserved.
-   */
+  const lines = sourceCode.split(/\r?\n/);
 
-  const callRegex =
-    /\.(call|staticcall)\s*(?:\{[^}]*\})?\s*\(/g;
+  const callIndex = lines.findIndex((line) =>
+    /\.(call|staticcall)\s*(?:\{[^}]*\})?\s*\(/.test(line)
+  );
 
-  const callMatch =
-    callRegex.exec(sourceCode);
-
-  if (!callMatch) {
+  if (callIndex === -1) {
     return {
       fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions and safe external-call handling.",
+      securityPattern: "Checks-Effects-Interactions pattern.",
       sideEffects: [
         "The low-level external call could not be safely identified.",
-        "Destination and calldata require contextual review.",
         "Manual security review is recommended."
       ]
     };
   }
 
-  const callIndex = callMatch.index;
+  let functionStart = -1;
+  let functionEnd = lines.length;
 
-  /*
-   * Find the Solidity function declaration containing the call.
-   * This works even when the function declaration and body are
-   * on the same line as the rest of the contract.
-   */
-  const functionRegex =
-    /function\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*\)[^{;]*\{/g;
-
-  let functionMatch: RegExpExecArray | null = null;
-  let candidate: RegExpExecArray | null = null;
-
-  while ((candidate = functionRegex.exec(sourceCode)) !== null) {
-    if (candidate.index <= callIndex) {
-      functionMatch = candidate;
-    } else {
+  for (let i = callIndex; i >= 0; i--) {
+    if (/^\s*function\s+[A-Za-z_][A-Za-z0-9_]*/.test(lines[i])) {
+      functionStart = i;
       break;
     }
   }
 
-  if (!functionMatch) {
+  if (functionStart === -1) {
     return {
       fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
+      securityPattern: "Checks-Effects-Interactions pattern.",
       sideEffects: [
-        "The containing function could not be safely identified.",
-        "The low-level call was preserved.",
+        "The containing function could not be identified.",
         "Manual security review is recommended."
       ]
     };
   }
 
-  const functionStart = functionMatch.index;
-  const openingBraceIndex =
-    sourceCode.indexOf("{", functionStart);
-
-  if (openingBraceIndex === -1 || openingBraceIndex > callIndex) {
-    return {
-      fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
-      sideEffects: [
-        "The containing function body could not be safely identified.",
-        "The low-level call was preserved.",
-        "Manual security review is recommended."
-      ]
-    };
-  }
-
-  /*
-   * Find the matching closing brace for the function.
-   * Ignore braces inside strings and comments so that ordinary
-   * Solidity text does not confuse the brace counter.
-   */
   let depth = 0;
-  let functionEnd = -1;
-  let inSingleQuote = false;
-  let inDoubleQuote = false;
-  let inLineComment = false;
-  let inBlockComment = false;
+  let started = false;
 
-  for (
-    let i = openingBraceIndex;
-    i < sourceCode.length;
-    i++
-  ) {
-    const character = sourceCode[i];
-    const nextCharacter = sourceCode[i + 1];
-
-    if (inLineComment) {
-      if (character === "\n") {
-        inLineComment = false;
+  for (let i = functionStart; i < lines.length; i++) {
+    for (const character of lines[i]) {
+      if (character === "{") {
+        depth++;
+        started = true;
       }
-      continue;
-    }
 
-    if (inBlockComment) {
-      if (character === "*" && nextCharacter === "/") {
-        inBlockComment = false;
-        i++;
+      if (character === "}") {
+        depth--;
+
+        if (started && depth === 0) {
+          functionEnd = i;
+          break;
+        }
       }
-      continue;
     }
 
-    if (inSingleQuote) {
-      if (character === "\\" && nextCharacter) {
-        i++;
-        continue;
-      }
-      if (character === "'") {
-        inSingleQuote = false;
-      }
-      continue;
-    }
-
-    if (inDoubleQuote) {
-      if (character === "\\" && nextCharacter) {
-        i++;
-        continue;
-      }
-      if (character === '"') {
-        inDoubleQuote = false;
-      }
-      continue;
-    }
-
-    if (character === "/" && nextCharacter === "/") {
-      inLineComment = true;
-      i++;
-      continue;
-    }
-
-    if (character === "/" && nextCharacter === "*") {
-      inBlockComment = true;
-      i++;
-      continue;
-    }
-
-    if (character === "'") {
-      inSingleQuote = true;
-      continue;
-    }
-
-    if (character === '"') {
-      inDoubleQuote = true;
-      continue;
-    }
-
-    if (character === "{") {
-      depth++;
-    } else if (character === "}") {
-      depth--;
-
-      if (depth === 0) {
-        functionEnd = i;
-        break;
-      }
+    if (started && depth === 0) {
+      break;
     }
   }
 
-  if (functionEnd === -1 || callIndex > functionEnd) {
-    return {
-      fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
-      sideEffects: [
-        "The containing function body could not be safely identified.",
-        "The low-level call was preserved.",
-        "Manual security review is recommended."
-      ]
-    };
+  function isStateAssignment(line: string): boolean {
+    const trimmed = line.trim();
+
+    if (!trimmed) return false;
+
+    if (
+      trimmed.startsWith("//") ||
+      trimmed.startsWith("/*") ||
+      trimmed.startsWith("*") ||
+      trimmed.startsWith("require") ||
+      trimmed.startsWith("return") ||
+      trimmed.startsWith("emit") ||
+      trimmed.startsWith("revert") ||
+      trimmed.startsWith("if") ||
+      trimmed.includes("bool success") ||
+      trimmed.includes("success,")
+    ) {
+      return false;
+    }
+
+    if (
+      /^(uint|uint256|int|int256|address|bool|bytes|string)\b/.test(trimmed)
+    ) {
+      return false;
+    }
+
+    return (
+      /=/.test(trimmed) &&
+      !/==/.test(trimmed) &&
+      !/=>/.test(trimmed)
+    );
   }
 
-  const functionBody =
-    sourceCode.slice(
-      openingBraceIndex + 1,
-      functionEnd
-    );
+  const stateChangeIndex = lines.findIndex((line, index) => {
+    if (index <= callIndex || index >= functionEnd) {
+      return false;
+    }
 
-  const relativeCallIndex =
-    callIndex -
-    (openingBraceIndex + 1);
+    return isStateAssignment(line);
+  });
 
-  /*
-   * Everything after the external call and before the end of the
-   * same function is searched for a simple state assignment.
-   */
-  const afterCall =
-    functionBody.slice(
-      relativeCallIndex
-    );
-
-  /*
-   * Match simple storage/state assignments such as:
-   *
-   * balances[msg.sender] -= amount;
-   * balances[msg.sender] = newBalance;
-   * owner = newOwner;
-   *
-   * Exclude comparisons and Solidity arrows.
-   */
-  const assignmentRegex =
-    /(?:^|[;\n\r])(\s*)([A-Za-z_][A-Za-z0-9_]*(?:\s*\[[^\]]+\])?\s*(?:=|\+=|-=|\*=|\/=|%=)\s*[^=;{}]+;)/m;
-
-  const stateMatch =
-    afterCall.match(assignmentRegex);
-
-  if (!stateMatch || stateMatch.index === undefined) {
+  if (stateChangeIndex === -1) {
     return {
       fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
+      securityPattern: "Checks-Effects-Interactions pattern.",
       sideEffects: [
         "No clear state-changing assignment was found after the external interaction.",
         "The low-level call was preserved.",
@@ -554,154 +438,25 @@ function fixExternalCall(
     };
   }
 
-  const stateStatement =
-    stateMatch[2].trim();
+  const stateLine = lines[stateChangeIndex];
 
-  /*
-   * Do not move declarations or obvious non-state operations.
-   */
-  if (
-    /^(uint|uint256|int|int256|address|bool|bytes|string)\b/.test(
-      stateStatement
-    ) ||
-    stateStatement.startsWith("return") ||
-    stateStatement.startsWith("emit") ||
-    stateStatement.startsWith("revert") ||
-    stateStatement.startsWith("require")
-  ) {
-    return {
-      fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
-      sideEffects: [
-        "The detected statement did not appear to be a safe state update.",
-        "The low-level call was preserved.",
-        "Manual security review is recommended."
-      ]
-    };
-  }
+  const updatedLines = [...lines];
 
-  /*
-   * Calculate absolute positions of the state statement.
-   * Include leading whitespace/newline only when it is directly
-   * attached to the statement, leaving the surrounding source intact.
-   */
-  const afterCallStart =
-    openingBraceIndex +
-    1 +
-    relativeCallIndex;
+  updatedLines.splice(stateChangeIndex, 1);
 
-  const stateRelativeStart =
-    stateMatch.index +
-    stateMatch[0].indexOf(stateStatement);
+  const newCallIndex =
+    stateChangeIndex < callIndex
+      ? callIndex - 1
+      : callIndex;
 
-  const stateAbsoluteStart =
-    afterCallStart +
-    stateRelativeStart;
-
-  const stateAbsoluteEnd =
-    stateAbsoluteStart +
-    stateStatement.length;
-
-  /*
-   * Do not rewrite if the state assignment already appears before
-   * the call. This protects already-mitigated code.
-   */
-  const beforeCall =
-    functionBody.slice(
-      0,
-      relativeCallIndex
-    );
-
-  const assignmentBeforeCallRegex =
-    /(?:^|[;\n\r])\s*[A-Za-z_][A-Za-z0-9_]*(?:\s*\[[^\]]+\])?\s*(?:=|\+=|-=|\*=|\/=|%=)\s*[^=;{}]+;/m;
-
-  if (assignmentBeforeCallRegex.test(beforeCall)) {
-    return {
-      fixedCode: sourceCode,
-      securityPattern:
-        "Checks-Effects-Interactions pattern.",
-      sideEffects: [
-        "A state-changing assignment already occurs before the external interaction.",
-        "The external call was not rewritten.",
-        "The low-level call and its return value still require contextual review."
-      ]
-    };
-  }
-
-  /*
-   * Remove the original state assignment and insert it immediately
-   * before the low-level call.
-   */
-  /*
-   * The regex match points to ".call" / ".staticcall", but the
-   * state update must be inserted before the ENTIRE external-call
-   * statement, not between the target expression and ".call".
-   *
-   * Example:
-   *
-   *   (bool success, ) = payable(msg.sender).call{value: amount}("");
-   *
-   * The insertion point therefore starts at the beginning of this
-   * statement, immediately after the previous semicolon.
-   */
-  let externalStatementStart =
-    callIndex;
-
-  for (
-    let i = callIndex - 1;
-    i >= openingBraceIndex + 1;
-    i--
-  ) {
-    const character = sourceCode[i];
-
-    if (character === ";") {
-      externalStatementStart = i + 1;
-      break;
-    }
-  }
-
-  while (
-    externalStatementStart < callIndex &&
-    /\s/.test(sourceCode[externalStatementStart])
-  ) {
-    externalStatementStart++;
-  }
-
-  /*
-   * If the external-call statement begins with an assignment such
-   * as "(bool success, ) =", walk backwards to the beginning of the
-   * statement rather than inserting before ".call".
-   */
-  const withoutState =
-    sourceCode.slice(0, stateAbsoluteStart) +
-    sourceCode.slice(stateAbsoluteEnd);
-
-  /*
-   * Because the state assignment is after the external call, removing
-   * it does not change the position of the external statement start.
-   */
-  const insertionIndex =
-    externalStatementStart;
-
-  const indentation =
-    sourceCode
-      .slice(
-        sourceCode.lastIndexOf("\n", insertionIndex - 1) + 1,
-        insertionIndex
-      )
-      .match(/^\s*/)?.[0] || "";
-
-  const insertionText =
-    `${indentation}${stateStatement}\n`;
-
-  const fixedCode =
-    withoutState.slice(0, insertionIndex) +
-    insertionText +
-    withoutState.slice(insertionIndex);
+  updatedLines.splice(
+    newCallIndex,
+    0,
+    stateLine
+  );
 
   return {
-    fixedCode,
+    fixedCode: updatedLines.join("\n"),
     securityPattern:
       "Checks-Effects-Interactions pattern.",
     sideEffects: [
