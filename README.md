@@ -1,185 +1,190 @@
-SMART CONTRACT FIXGPT AI TOOL
-==============================
+# 🚀 Smart Contract FixGPT AI Tool
 
-AI-Assisted Smart Contract Security Analysis, Vulnerability Detection,
-Remediation and Verification Platform
+<div align="center">
 
+![Solidity](https://img.shields.io/badge/Solidity-0.8.x-blue.svg)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB.svg)
+![Vite](https://img.shields.io/badge/Vite-Build-646CFF.svg)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-Backend-3178C6.svg)
+![Security](https://img.shields.io/badge/Smart%20Contract-Security-red.svg)
+![License](https://img.shields.io/badge/License-MIT-red.svg)
 
-1. PROJECT OVERVIEW
--------------------
+</div>
 
-Smart Contract FixGPT is a full-stack Web3 security platform designed to
-analyze Solidity smart contracts, detect potential security vulnerabilities,
-explain their security impact, generate remediation suggestions, and
-re-analyze proposed fixes.
+---
 
-The project combines AST-based Solidity analysis, custom security detectors,
-backend audit services, AI-assisted remediation, fix verification, and a
-React-based security interface into a single workflow.
+# 📖 Project Overview
 
-Core workflow:
+The **Smart Contract FixGPT AI Tool** is an AI-powered smart contract security analysis platform developed as part of the **EtherAuthority Web3 Internship**.
 
-    DETECT -> EXPLAIN -> FIX -> RE-ANALYZE -> REPORT
+The platform helps developers identify common Solidity smart contract security issues, understand their security impact, receive remediation suggestions, generate corrected Solidity code for supported vulnerabilities, and verify proposed fixes through compilation and re-analysis.
 
+The core workflow is:
 
-2. PROBLEM STATEMENT
---------------------
+**Detect → Explain → Fix → Re-Analyze → Report**
 
-Smart contracts are immutable programs that can control digital assets and
-execute critical blockchain logic. A small implementation mistake can lead
-to unauthorized access, financial loss, denial of service, or other security
-issues.
+The project combines Solidity parsing, custom security detectors, a backend REST API, automated remediation logic, fixed-code compilation, verification, and a React-based frontend.
 
-Traditional smart contract security auditing requires specialized knowledge
-and significant manual effort.
+---
 
-Smart Contract FixGPT explores an automated workflow in which static analysis
-and AI-assisted reasoning work together to help developers identify and
-understand potential vulnerabilities before deploying contracts.
+# 🎯 Objectives
 
-The platform is designed to:
+- 🔍 Analyze Solidity smart contracts for security vulnerabilities.
+- 🧠 Explain detected vulnerabilities in understandable language.
+- 🛠️ Generate remediation suggestions and fixed Solidity code where supported.
+- 🔄 Re-analyze proposed fixes.
+- ✅ Compile fixed Solidity code to verify syntax and compiler compatibility.
+- 📊 Calculate a security score from detected findings.
+- 🧪 Test vulnerability detectors and remediation workflows.
+- 💻 Provide a simple web interface for contract analysis.
+- 📄 Prepare security findings for reporting and review.
+- 🎓 Build a practical smart contract security project for the EtherAuthority internship.
 
-    1. Accept Solidity source code.
-    2. Parse the contract structure.
-    3. Perform static security analysis.
-    4. Detect potential vulnerabilities.
-    5. Assign severity and confidence.
-    6. Explain the security impact.
-    7. Recommend remediation.
-    8. Generate proposed fixed Solidity code.
-    9. Re-analyze the proposed fix.
-   10. Determine a verification status.
-   11. Calculate a security score.
-   12. Present the results through a web interface.
+---
 
+# ✨ Features
 
-3. PROJECT OBJECTIVES
----------------------
+- 🔍 Solidity source-code analysis
+- 📁 Solidity file upload support
+- 🧩 Solidity AST-based parsing
+- 🛡️ 20 custom security detectors
+- 🚨 Severity classification
+- 🎯 Confidence classification
+- 📊 Security score from 0–100
+- 🧠 AI-style vulnerability explanations
+- 🛠️ Automated fixes for selected vulnerabilities
+- 🔄 Fixed-code re-analysis
+- ✅ Fixed-code compiler verification
+- 📋 Remaining-finding detection
+- ⚠️ Verification failure reporting
+- ⏳ Loading state during analysis
+- ❌ Invalid Solidity error handling
+- 📱 React-based security dashboard
+- 🧾 Audit history
+- 💻 Backend REST API
 
-The main objectives of Smart Contract FixGPT are:
+---
 
-- Build an automated Solidity security-analysis system.
-- Detect common smart contract vulnerability patterns.
-- Provide structured and understandable security findings.
-- Explain the potential impact of detected vulnerabilities.
-- Provide actionable remediation recommendations.
-- Generate AI-assisted fixed Solidity code.
-- Re-analyze proposed fixes instead of automatically trusting them.
-- Provide verification status for proposed remediation.
-- Calculate a security score from detected findings.
-- Provide a developer-friendly security interface.
-- Create a foundation for future AI-assisted smart contract auditing.
+# 🛡️ Security Detectors
 
+The analyzer currently contains 20 security detectors.
 
-4. CORE WORKFLOW
-----------------
+| ID | Detector | Category |
+|----|----------|----------|
+| SCF-001 | Reentrancy | Reentrancy |
+| SCF-002 | Missing Access Control | Access Control |
+| SCF-003 | Unchecked Arithmetic | Arithmetic |
+| SCF-004 | Low-Level External Call | External Calls |
+| SCF-005 | Denial of Service | DoS |
+| SCF-006 | Weak Randomness | Randomness |
+| SCF-007 | Unchecked Return Value | External Calls |
+| SCF-008 | tx.origin Usage | Authentication |
+| SCF-009 | selfdestruct Usage | Contract Security |
+| SCF-010 | Unprotected Initializer | Upgradeability |
+| SCF-011 | delegatecall | Upgradeability |
+| SCF-012 | Zero Address Validation | Input Validation |
+| SCF-013 | Token Approval | Token Security |
+| SCF-014 | Oracle Manipulation | DeFi / Oracle |
+| SCF-015 | Flash Loan Risk | DeFi |
+| SCF-016 | Signature Replay | Authentication |
+| SCF-017 | Signature Malleability | Cryptography |
+| SCF-018 | Upgrade Authorization | Upgradeability |
+| SCF-019 | Storage Collision | Upgradeability |
+| SCF-020 | Unsafe ETH Transfer | ETH Transfer |
 
-DETECT
-    The analyzer parses the submitted Solidity source code and examines
-    security-sensitive structures and operations.
+> The detectors are heuristic/static-analysis rules and should not be treated as a complete formal security audit.
 
-EXPLAIN
-    Detected issues are converted into structured findings containing the
-    vulnerability, severity, confidence, location, impact and recommendation.
+---
 
-FIX
-    For supported findings, the remediation layer generates proposed fixes,
-    explanations and recommended security patterns.
+# 🏗️ Project Architecture
 
-RE-ANALYZE
-    Proposed fixed code is analyzed again to determine whether relevant
-    findings remain.
+```text
+                         User
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │   React Frontend  │
+                 │      + Vite       │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │   REST API        │
+                 │ Node + Express    │
+                 │   + TypeScript    │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │ Solidity Analyzer │
+                 │ Parser + AST      │
+                 │ 20 Detectors      │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │    FixGPT Engine  │
+                 │ Explain + Fix     │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │ Fix Verification  │
+                 │ Compile + Analyze │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │ Results / Report  │
+                 └───────────────────┘
+```
 
-REPORT
-    The final audit result contains the audit ID, security score, findings,
-    remediation information and verification results.
+---
 
+# ⚙️ Core Workflow
 
-5. SYSTEM ARCHITECTURE
-----------------------
+```text
+User submits Solidity contract
+            │
+            ▼
+      Solidity Parsing
+            │
+            ▼
+       AST Analysis
+            │
+            ▼
+     Security Detectors
+            │
+            ▼
+   Findings + Severity
+            │
+            ▼
+   Explain Vulnerability
+            │
+            ▼
+      Generate Fix
+            │
+            ▼
+    Compile Fixed Code
+            │
+            ▼
+       Re-Analyze
+            │
+            ▼
+       Verification
+            │
+            ▼
+      Final Results
+```
 
-The application is divided into three major layers.
+---
 
-    +--------------------------------------------------+
-    |                    FRONTEND                      |
-    |              React + TypeScript                  |
-    |                                                  |
-    |  Contract Input | Audit Results | Findings       |
-    |  Fix Comparison | History | Security Dashboard   |
-    +-------------------------+------------------------+
-                              |
-                              | HTTP / REST API
-                              v
-    +--------------------------------------------------+
-    |                    BACKEND                       |
-    |                Node.js + Express                 |
-    |                                                  |
-    |  Audit Routes | Audit Service | Compiler Service |
-    |  AI Service   | Fix Generator | Verification     |
-    +-------------------------+------------------------+
-                              |
-                              v
-    +--------------------------------------------------+
-    |              SECURITY ANALYZER                   |
-    |                                                  |
-    |  Solidity Parser | AST Analysis | Detectors      |
-    |  Finding Normalization | Security Heuristics     |
-    +--------------------------------------------------+
+# 🔍 Smart Contract Analysis
 
+The analyzer parses Solidity source code and extracts structural information such as:
 
-6. TECHNOLOGY STACK
--------------------
-
-FRONTEND
-- React
-- TypeScript
-- Vite
-- Axios
-- React Router
-- CSS
-- Monaco Editor
-- Lucide Icons
-- Framer Motion
-
-BACKEND
-- Node.js
-- Express
-- TypeScript
-- Axios
-- Zod
-- tsx / TypeScript development tooling
-
-SMART CONTRACT ANALYSIS
-- Solidity
-- @solidity-parser/parser
-- Solidity Abstract Syntax Tree (AST)
-- Custom security detectors
-- Static security analysis
-- Pattern-based security heuristics
-
-DEVELOPMENT TOOLS
-- Git
-- GitHub
-- VS Code
-- WSL Ubuntu
-- Remix IDE
-- Foundry
-- MetaMask
-- Ethereum-compatible development environments
-
-
-7. SECURITY ANALYSIS ENGINE
----------------------------
-
-The analyzer is the core security component of Smart Contract FixGPT.
-
-It parses Solidity source code into an Abstract Syntax Tree (AST), extracts
-contract information, and executes multiple security detectors.
-
-The parser/analyzer can inspect information including:
-
-- Solidity version
-- Contracts
+- Contract names
 - Functions
 - Modifiers
 - State variables
@@ -193,755 +198,635 @@ The parser/analyzer can inspect information including:
 - Token interactions
 - Security-sensitive operations
 
+The analyzer then runs custom security detectors against the parsed contract.
+
+---
+
+# 🚨 Findings
+
+Each security finding contains structured information.
+
+```text
+Finding
+│
+├── ID
+├── Title
+├── Severity
+├── Confidence
+├── Category
+├── Contract Name
+├── Function Name
+├── Line Number
+├── Description
+├── Impact
+├── Recommendation
+├── Vulnerable Code
+└── AI Analysis
+    ├── Summary
+    ├── Explanation
+    ├── Fix
+    ├── Fixed Code
+    ├── Security Pattern
+    └── Side Effects
+```
 
-8. VULNERABILITY DETECTION MODULES
-----------------------------------
+---
+
+# 📊 Severity Levels
 
-The current analyzer contains detectors covering twenty security patterns.
+| Severity | Meaning |
+|----------|---------|
+| Critical | Very serious security issue requiring immediate review |
+| High | Significant vulnerability with potentially serious impact |
+| Medium | Security issue requiring remediation or review |
+| Low | Lower-impact security concern |
+| Informational | Security-related observation |
 
-SCF-001  Reentrancy
-         Detects potentially unsafe external interactions occurring before
-         relevant state updates.
+---
 
-SCF-002  Missing Access Control
-         Detects security-sensitive functions that may lack authorization
-         controls.
+# 🎯 Confidence Levels
 
-SCF-003  Unchecked Arithmetic
-         Detects arithmetic operations inside Solidity unchecked blocks.
+Findings also contain a confidence level:
 
-SCF-004  Unsafe External Calls
-         Detects potentially unsafe low-level external calls and interaction
-         patterns.
+- **High**
+- **Medium**
+- **Low**
+
+Confidence represents how strongly the static-analysis rule matches the detected pattern.
+
+---
+
+# 📈 Security Score
 
-SCF-005  Denial of Service
-         Detects potentially unbounded loops over dynamic collections.
+Smart Contract FixGPT calculates a security score between **0 and 100**.
 
-SCF-006  Weak Randomness
-         Detects predictable blockchain-derived randomness patterns.
+The frontend presents the score using:
 
-SCF-007  Unchecked Return Values
-         Detects low-level calls whose return values may not be checked.
+```text
+80–100  → Good
+40–79   → Risky
+0–39    → Critical
+```
 
-SCF-008  tx.origin Authentication
-         Detects authentication logic based on tx.origin.
+The score is intended as a development aid and **does not guarantee that a smart contract is secure**.
 
-SCF-009  selfdestruct Usage
-         Detects use of the contract destruction mechanism.
+---
+
+# 🧠 FixGPT Remediation
 
-SCF-010  Unprotected Initializer
-         Detects initializer functions that may be callable without
-         sufficient protection.
+For supported vulnerabilities, FixGPT can generate a remediation and corrected Solidity code.
 
-SCF-011  Unsafe delegatecall
-         Detects potentially dangerous delegatecall usage.
+The remediation process includes:
 
-SCF-012  Zero Address Validation
-         Detects security-sensitive address assignments without zero-address
-         validation.
+```text
+Vulnerability
+      │
+      ▼
+Security Explanation
+      │
+      ▼
+Recommended Pattern
+      │
+      ▼
+Generated Fixed Code
+      │
+      ▼
+Compiler Verification
+      │
+      ▼
+Static Re-Analysis
+      │
+      ▼
+Verification Status
+```
 
-SCF-013  Token Approval
-         Detects potentially unsafe ERC-20 approval patterns.
+Supported automated remediation includes selected patterns such as:
 
-SCF-014  Oracle Manipulation
-         Detects heuristic patterns involving on-chain reserve or price data.
+- Reentrancy / Checks-Effects-Interactions
+- External-call ordering
+- Unchecked arithmetic
+- Denial-of-service loop bounding
+- tx.origin replacement
 
-SCF-015  Flash Loan Risk
-         Detects flash-loan-related interaction patterns.
+Other vulnerabilities are returned for manual security review where automatically modifying the contract could change business logic or produce unsafe assumptions.
 
-SCF-016  Signature Replay
-         Detects signature verification patterns that may lack replay
-         protection.
+---
 
-SCF-017  Signature Malleability
-         Detects potentially unsafe ECDSA signature handling patterns.
+# ✅ Fix Verification
 
-SCF-018  Upgrade Authorization
-         Detects upgrade-related functions without recognized authorization
-         controls.
+Generated fixes are treated as proposed remediations rather than automatically trusted solutions.
 
-SCF-019  Storage Collision
-         Detects potential state-variable naming collisions across contract
-         structures.
+The platform verifies fixes using:
 
-SCF-020  Unsafe ETH Transfer
-         Detects usage of transfer() and send() for ETH transfers.
+- Solidity compilation
+- Compiler error collection
+- Compiler warning collection
+- Static security re-analysis
+- Remaining-finding comparison
 
-IMPORTANT:
-Some detectors are intentionally heuristic. Detection of a pattern does not
-automatically prove that a contract is exploitable.
+### Verification Status
 
+| Status | Description |
+|--------|-------------|
+| Fixed | Proposed fix compiled and the targeted finding was mitigated |
+| Partially Fixed | Some security concerns remain |
+| Not Fixed | The targeted issue remains |
+| Verification Failed | Fixed code could not be successfully verified |
 
-9. STRUCTURED SECURITY FINDINGS
--------------------------------
+---
 
-Each security finding follows a consistent structure.
+# 💻 Frontend Integration
 
-Example:
+The frontend is built using **React** and **Vite**.
 
-{
-  "id": "SCF-001",
-  "title": "Potential Reentrancy Vulnerability",
-  "severity": "High",
-  "confidence": "High",
-  "category": "Reentrancy",
-  "contractName": "VulnerableVault",
-  "functionName": "withdraw",
-  "lineNumber": 8,
-  "description": "An external call occurs before a relevant state update.",
-  "impact": "An attacker may potentially re-enter the function before the state is updated.",
-  "recommendation": "Apply checks-effects-interactions and update state before the external call."
-}
+### Functionalities
 
-Findings can contain:
+- Enter Solidity source code
+- Upload Solidity files
+- Start security analysis
+- Display loading state
+- Display validation errors
+- Display security score
+- Display vulnerability findings
+- Display severity and confidence
+- Display remediation details
+- Display fixed Solidity code
+- Display verification results
+- Store audit history
 
-- Finding ID
-- Vulnerability title
-- Severity
-- Confidence
-- Category
-- Contract name
-- Function name
-- Line number
-- Description
-- Impact
-- Recommendation
-- Vulnerable code
-- AI analysis
-- Verification result
+---
 
+# ⚙️ Backend Integration
 
-10. SEVERITY CLASSIFICATION
----------------------------
+The backend is developed using **Node.js, Express, and TypeScript**.
 
-Findings use the following severity levels:
+### Backend Responsibilities
 
-- Critical
-- High
-- Medium
-- Low
-- Informational
+- Request validation
+- Solidity analysis
+- Security finding generation
+- Fix generation
+- Fixed-code compilation
+- Re-analysis
+- Verification
+- Security score calculation
+- REST API responses
 
-Severity represents the potential security importance of a finding.
+---
 
+# 🔌 API
 
-11. CONFIDENCE CLASSIFICATION
------------------------------
+## Health Check
 
-The analyzer records:
-
-- High
-- Medium
-- Low
-
-Confidence indicates how strongly the detector evidence supports the
-reported pattern.
-
-This is especially important for heuristic security checks because a detected
-pattern may require additional manual validation.
-
-
-12. AI-ASSISTED REMEDIATION
----------------------------
-
-Smart Contract FixGPT includes an AI-assisted remediation layer designed to
-transform vulnerability findings into actionable remediation guidance.
-
-For supported findings, the remediation workflow can provide:
-
-- Vulnerable code
-- Fixed code
-- Security explanation
-- Recommended security pattern
-- Potential side effects
-- Verification status
-- Remaining findings after re-analysis
-
-The generated fix is treated as a proposed remediation and is not considered
-proof that the contract is secure.
-
-
-13. FIX VERIFICATION
---------------------
-
-A major part of the project is the verification of generated fixes.
-
-The system does not automatically assume that AI-generated code is correct.
-
-The proposed fixed code is re-analyzed to determine whether the original
-security issue is still detected.
-
-Verification statuses:
-
-FIXED
-    The original vulnerability is no longer detected and no relevant
-    remaining findings are reported by the verification workflow.
-
-PARTIALLY FIXED
-    The remediation mitigates part of the original issue, but relevant
-    findings remain.
-
-NOT FIXED
-    The original security issue remains after remediation.
-
-VERIFICATION FAILED
-    The proposed code could not be successfully verified, for example because
-    of compilation or verification errors.
-
-
-14. SECURITY SCORE
-------------------
-
-Smart Contract FixGPT calculates a security score from 0 to 100.
-
-Current presentation:
-
-    80 - 100    Good
-    40 - 79     Risky
-     0 - 39     Critical
-
-The score is intended to provide a quick summary of the findings detected by
-the analyzer.
-
-IMPORTANT:
-The security score is an analysis indicator. It is not a guarantee that a
-smart contract is secure and it is not a replacement for a professional
-security audit.
-
-
-15. BACKEND ARCHITECTURE
-------------------------
-
-The backend provides the REST API connecting the frontend with the security
-analysis and remediation services.
-
-Current structure:
-
-backend/
-    src/
-        ai/
-            ai.service.ts
-            fix.generator.ts
-
-        routes/
-            audit.routes.ts
-
-        services/
-            audit.service.ts
-            solidity.compiler.ts
-
-        types/
-            audit.ts
-            fixgpt-analyzer.d.ts
-
-        server.ts
-
-Backend responsibilities include:
-
-- Receiving audit requests
-- Validating input
-- Running contract analysis
-- Processing findings
-- Handling AI remediation
-- Verifying proposed fixes
-- Returning structured audit results
-- Handling errors
-- Providing a health endpoint
-
-
-16. API
--------
-
-HEALTH CHECK
-
+```http
 GET /api/health
+```
 
 Example response:
 
+```json
 {
   "status": "ok",
   "service": "Smart Contract FixGPT API",
   "version": "0.1.0"
 }
+```
 
+---
 
-AUDIT CONTRACT
+## Audit Contract
 
+```http
 POST /api/audit
+```
 
 Example request:
 
+```json
 {
   "contractName": "VulnerableVault",
   "solidityVersion": "0.8.20",
-  "sourceCode": "pragma solidity ^0.8.20; contract VulnerableVault {}"
+  "sourceCode": "pragma solidity ^0.8.20; ..."
 }
+```
 
-Example response:
+Example response structure:
 
+```json
 {
-  "auditId": "audit_xxxxxxxxx",
+  "auditId": "audit_123456789",
   "status": "completed",
   "score": 70,
   "findings": []
 }
+```
 
+For invalid Solidity or failed analysis, the API returns a failed status so the frontend can display an appropriate error instead of a misleading security result.
 
-INVALID INPUT HANDLING
+---
 
-If the Solidity source cannot be analyzed, the backend returns a failed
-audit status rather than treating invalid Solidity as a successful
-zero-finding audit.
+# 🧪 Testing
 
-This distinction prevents malformed source code from being incorrectly
-presented as secure.
+The analyzer includes tests for security detectors and sample vulnerable and secure contracts.
 
+### Tested Security Categories
 
-17. FRONTEND
-------------
+- Reentrancy
+- Access control
+- Arithmetic
+- External calls
+- Denial of service
+- Weak randomness
+- Unchecked return values
+- tx.origin
+- selfdestruct
+- Upgradeability
+- delegatecall
+- Zero-address validation
+- Token approvals
+- Oracle patterns
+- Flash-loan patterns
+- Signature security
+- Storage collision
+- ETH transfers
 
-The React frontend provides the user-facing security-analysis experience.
+### Example Reentrancy Test
 
-Frontend responsibilities include:
+Vulnerable pattern:
 
-- Solidity source input
-- Solidity file upload
-- Contract analysis
-- Loading states
-- Error handling
-- Security score display
-- Finding summaries
-- Detailed vulnerability information
-- AI remediation results
-- Fix verification
-- Audit history
-- Security-focused user interface
+```solidity
+function withdraw(uint256 amount) external {
+    (bool success,) = msg.sender.call{value: amount}("");
+    require(success);
 
-The frontend communicates with the backend through the /api routes.
-
-Development server:
-
-    http://localhost:5173
-
-
-18. FRONTEND STRUCTURE
-----------------------
-
-frontend/
-    src/
-        App.tsx
-        App.css
-        index.css
-        main.tsx
-
-    public/
-    package.json
-    tsconfig.json
-    vite.config.ts
-
-
-19. EXAMPLE VULNERABLE CONTRACT
--------------------------------
-
-pragma solidity ^0.8.20;
-
-contract VulnerableVault {
-    mapping(address => uint256) public balances;
-
-    function withdraw(uint256 amount) external {
-        (bool success,) = msg.sender.call{value: amount}("");
-        require(success);
-
-        balances[msg.sender] -= amount;
-    }
+    balances[msg.sender] -= amount;
 }
+```
 
-This contract demonstrates a reentrancy-related interaction pattern because
-the external call occurs before the balance update.
+Proposed remediation:
 
-A safer implementation can follow the checks-effects-interactions pattern:
+```solidity
+function withdraw(uint256 amount) external {
+    balances[msg.sender] -= amount;
 
-pragma solidity ^0.8.20;
-
-contract SaferVault {
-    mapping(address => uint256) public balances;
-
-    function withdraw(uint256 amount) external {
-        balances[msg.sender] -= amount;
-
-        (bool success,) = msg.sender.call{value: amount}("");
-        require(success);
-    }
+    (bool success,) = msg.sender.call{value: amount}("");
+    require(success);
 }
+```
 
-The proposed remediation is then re-analyzed by the verification workflow.
+The fixed code is compiled and re-analyzed before the remediation is reported as verified.
 
+---
 
-20. ERROR HANDLING
-------------------
+# 🧪 Production Build Validation
 
-The platform separates successful audit results from analysis failures.
+The project was validated using:
 
-Examples of frontend behavior include:
+### Backend TypeScript
 
-- Loading indicator during analysis
-- Disabled analyze button while processing
-- User-facing error messages
-- Recovery after failed analysis
+```bash
+cd backend
+npx tsc --noEmit
+```
+
+### Frontend Production Build
+
+```bash
+cd frontend
+npm run build
+```
+
+The final validation also included:
+
+- Valid Solidity analysis
+- Secure contract analysis
+- Vulnerable contract analysis
 - Invalid Solidity error handling
+- Automated-fix verification
+- Frontend end-to-end analysis flow
+- Git working-tree verification
 
-Malformed Solidity should not appear as a successful audit with zero findings.
+---
 
+# 📦 Installation
 
-21. TESTING
------------
+## 1. Clone Repository
 
-ANALYZER TESTS
+```bash
+git clone https://github.com/anuragreddy23-dot/Smart-Contract-FixGPT-AI-Tool.git
+```
 
-From the analyzer directory:
+```bash
+cd Smart-Contract-FixGPT-AI-Tool
+```
 
-    cd analyzer
-    npm test
+## 2. Install Analyzer Dependencies
 
-The analyzer test suite validates representative vulnerability detectors,
-Solidity parsing, and structured security findings.
+```bash
+cd analyzer
+npm install
+```
 
+## 3. Install Backend Dependencies
 
-BACKEND TYPE CHECKING
+```bash
+cd ../backend
+npm install
+```
 
-    cd backend
-    npx tsc --noEmit
+## 4. Install Frontend Dependencies
 
+```bash
+cd ../frontend
+npm install
+```
 
-FRONTEND PRODUCTION BUILD
+---
 
-    cd frontend
-    npm run build
+# ▶️ Running the Project
 
+## Start Backend
 
-22. INSTALLATION
-----------------
-
-PREREQUISITES
-
-Install:
-
-- Node.js
-- npm
-- Git
-- WSL Ubuntu (recommended for the development environment)
-
-
-CLONE REPOSITORY
-
-    git clone https://github.com/anuragreddy23-dot/Smart-Contract-FixGPT-AI-Tool.git
-    cd Smart-Contract-FixGPT-AI-Tool
-
-
-INSTALL ANALYZER
-
-    cd analyzer
-    npm install
-    cd ..
-
-
-INSTALL BACKEND
-
-    cd backend
-    npm install
-    cd ..
-
-
-INSTALL FRONTEND
-
-    cd frontend
-    npm install
-    cd ..
-
-
-23. RUNNING THE PROJECT
------------------------
-
-START BACKEND
-
-    cd backend
-    npm run dev
+```bash
+cd backend
+npm run dev
+```
 
 Backend:
 
-    http://127.0.0.1:5000
+```text
+http://127.0.0.1:5000
+```
 
-Health endpoint:
+Health check:
 
-    http://127.0.0.1:5000/api/health
+```text
+http://127.0.0.1:5000/api/health
+```
 
+---
 
-START FRONTEND
+## Start Frontend
 
-Open a second terminal:
+Open another terminal:
 
-    cd frontend
-    npm run dev
+```bash
+cd frontend
+npm run dev
+```
 
 Frontend:
 
-    http://localhost:5173
-
-
-24. COMPLETE PROJECT STRUCTURE
-------------------------------
-
-smart-contract-fixgpt/
-|
-+-- analyzer/
-|   +-- detectors/
-|   +-- parsers/
-|   +-- tests/
-|   +-- analyzer.js
-|   +-- index.js
-|   +-- utils.js
-|   +-- package.json
-|
-+-- backend/
-|   +-- src/
-|       +-- ai/
-|       +-- routes/
-|       +-- services/
-|       +-- types/
-|       +-- server.ts
-|   +-- package.json
-|
-+-- frontend/
-|   +-- src/
-|       +-- App.tsx
-|       +-- App.css
-|       +-- index.css
-|       +-- main.tsx
-|   +-- package.json
-|
-+-- contracts/
-+-- prisma/
-+-- reports/
-+-- tests/
-+-- .gitignore
-+-- README.txt
-
-
-25. DESIGN PRINCIPLES
----------------------
-
-DEFENSE IN DEPTH
-
-Multiple detectors analyze different classes of security patterns instead of
-relying on a single detection mechanism.
-
-EXPLAINABILITY
-
-Findings contain descriptions, impact information and recommendations so
-users can understand why an issue was reported.
-
-VERIFICATION
-
-AI-generated remediation is re-analyzed instead of being automatically
-trusted.
-
-SEPARATION OF RESPONSIBILITIES
-
-The frontend, backend, analyzer and AI remediation components are separated
-into distinct layers.
-
-HUMAN REVIEW
-
-Automated analysis is intended to assist developers and security researchers.
-Security-critical code still requires appropriate manual review and testing.
-
-
-26. CURRENT PROJECT SCOPE
--------------------------
-
-The current implementation focuses on:
-
-- Solidity source-code analysis
-- AST parsing
-- Custom vulnerability detectors
-- Structured security findings
-- Severity and confidence classification
-- AI-assisted remediation
-- Fixed-code generation
-- Re-analysis
-- Fix verification
-- Security scoring
-- React-based frontend
-- REST backend
-- Audit history
-- Error handling
-- Loading states
+```text
+http://localhost:5173
+```
+
+---
+
+# 🏗️ Project Structure
+
+```text
+Smart-Contract-FixGPT-AI-Tool/
+│
+├── analyzer/
+│   ├── detectors/
+│   │   ├── reentrancyDetector.js
+│   │   ├── accessControlDetector.js
+│   │   ├── arithmeticDetector.js
+│   │   ├── externalCallDetector.js
+│   │   ├── dosDetector.js
+│   │   ├── randomnessDetector.js
+│   │   ├── uncheckedReturnValueDetector.js
+│   │   ├── txOriginDetector.js
+│   │   ├── selfdestructDetector.js
+│   │   ├── upgradeabilityDetector.js
+│   │   ├── delegatecallDetector.js
+│   │   ├── zeroAddressDetector.js
+│   │   ├── tokenApprovalDetector.js
+│   │   ├── oracleManipulationDetector.js
+│   │   ├── flashLoanDetector.js
+│   │   ├── signatureReplayDetector.js
+│   │   ├── signatureMalleabilityDetector.js
+│   │   ├── upgradeAuthorizationDetector.js
+│   │   ├── storageCollisionDetector.js
+│   │   └── unsafeEthTransferDetector.js
+│   │
+│   ├── parsers/
+│   │   ├── solidityParser.js
+│   │   └── contractStructure.js
+│   │
+│   ├── tests/
+│   ├── analyzer.js
+│   ├── index.js
+│   ├── utils.js
+│   └── package.json
+│
+├── backend/
+│   └── src/
+│       ├── ai/
+│       │   ├── ai.service.ts
+│       │   └── fix.generator.ts
+│       │
+│       ├── routes/
+│       │   └── audit.routes.ts
+│       │
+│       ├── services/
+│       │   ├── audit.service.ts
+│       │   └── solidity.compiler.ts
+│       │
+│       ├── types/
+│       │   ├── audit.ts
+│       │   └── fixgpt-analyzer.d.ts
+│       │
+│       └── server.ts
+│
+├── frontend/
+│   └── src/
+│       ├── App.tsx
+│       ├── App.css
+│       ├── index.css
+│       └── main.tsx
+│
+├── README.md
+└── .gitignore
+```
+
+---
+
+# 📷 Project Screenshots
+
+Create a folder:
+
+```text
+docs/screenshots/
+```
+
+Recommended screenshots:
+
+```text
+docs/screenshots/
+├── home.png
+├── contract-input.png
+├── analysis-results.png
+├── finding-details.png
+├── ai-fix.png
+├── verification-fixed.png
+└── invalid-contract.png
+```
+
+### 🏠 Home Page
+
+```md
+![Home](docs/screenshots/home.png)
+```
+
+### 🔍 Contract Analysis
+
+```md
+![Contract Analysis](docs/screenshots/contract-input.png)
+```
 
+### 🚨 Security Findings
 
-27. LIMITATIONS
----------------
+```md
+![Analysis Results](docs/screenshots/analysis-results.png)
+```
 
-Smart Contract FixGPT is an internship and research-oriented project.
+### 🧠 AI Fix
 
-The analyzer combines static analysis, security heuristics and AI-assisted
-reasoning. Therefore, it may produce:
+```md
+![AI Fix](docs/screenshots/ai-fix.png)
+```
 
-- False positives
-- False negatives
-- Heuristic findings
-- Incomplete vulnerability coverage
-- Incorrect remediation suggestions
-- Findings requiring manual validation
+### ✅ Fix Verification
 
-The current detector implementations should not be interpreted as complete
-formal verification of smart contract security.
+```md
+![Verification](docs/screenshots/verification-fixed.png)
+```
 
-The security score is an indicator of detected issues and does not guarantee
-that a contract is secure.
+### ❌ Invalid Solidity Handling
 
-For production deployments involving significant value, independent
-professional security review remains important.
+```md
+![Invalid Solidity](docs/screenshots/invalid-contract.png)
+```
 
+---
 
-28. FUTURE SCOPE
-----------------
+# 🎥 Demo Video
 
-ADVANCED STATIC ANALYSIS
+Record a short demonstration covering:
 
-- Slither integration
-- Solhint integration
-- Solidity compiler integration
-- Symbolic execution
-- Control-flow analysis
-- Data-flow analysis
+- Opening Smart Contract FixGPT
+- Entering Solidity source code
+- Running security analysis
+- Viewing detected vulnerabilities
+- Opening a remediation
+- Showing fixed Solidity code
+- Showing verification status
+- Demonstrating invalid Solidity error handling
 
-ADVANCED AI SECURITY ANALYSIS
+### Demo Video Link
 
-- LLM-assisted vulnerability reasoning
-- Context-aware remediation
-- Multi-file contract analysis
-- Cross-contract vulnerability reasoning
-- False-positive reduction
-- Security-aware code generation
+```text
+Add your demo video link here
+```
 
-ADVANCED VERIFICATION
+---
 
-- Automated compilation of generated fixes
-- Unit-test generation
-- Foundry test generation
-- Fuzz testing
-- Invariant testing
-- Differential analysis between vulnerable and fixed versions
+# 📋 Internship Requirements Completed
 
-ADDITIONAL INPUT SOURCES
+| Requirement | Status |
+|------------|--------|
+| Smart Contract Security Analysis | ✅ Completed |
+| Solidity Parsing / AST Analysis | ✅ Completed |
+| Vulnerability Detection | ✅ Completed |
+| Security Severity Classification | ✅ Completed |
+| AI Fix / Remediation Workflow | ✅ Completed |
+| Fixed-Code Verification | ✅ Completed |
+| Re-Analysis Workflow | ✅ Completed |
+| Security Scoring | ✅ Completed |
+| Frontend Integration | ✅ Completed |
+| Backend REST API | ✅ Completed |
+| Error Handling | ✅ Completed |
+| Loading UI | ✅ Completed |
+| Testing | ✅ Completed |
+| Documentation | ✅ Completed |
+| GitHub Publication | ✅ Completed |
+| Internship Project | ✅ Completed |
+| Demo Video | ⏳ Add Link |
 
-- ZIP project uploads
-- GitHub repositories
-- Contract addresses
-- Multi-contract projects
-- Deployed contract source code
+---
 
-REPORTING
+# 🔮 Future Improvements
 
-- PDF security reports
-- Markdown reports
-- JSON export
-- Detailed audit history
-- Vulnerability trend tracking
+- 🤖 More advanced LLM-based code reasoning
+- 🧪 Slither integration
+- 🔎 Solhint integration
+- 🧩 Larger AST-based vulnerability rule set
+- 📦 ZIP project upload
+- 🔗 GitHub repository scanning
+- 🌐 Deployed contract/address analysis
+- 📄 PDF security reports
+- 📝 Markdown/JSON report export
+- 🗂️ Persistent audit history
+- 👥 User authentication
+- ☁️ Cloud deployment
+- 📊 Security trend dashboards
+- 🔄 Improved automated remediation
+- 🧠 Cross-contract analysis
+- 🧪 Property-based and fuzz testing
+- 🔐 More upgradeability and DeFi-specific checks
 
-SECURITY INTELLIGENCE
+---
 
-- DeFi-specific detectors
-- Advanced oracle analysis
-- Upgradeability analysis
-- Cross-contract dependency analysis
-- Known vulnerability pattern databases
+# ⚠️ Security Disclaimer
 
+Smart Contract FixGPT is a **security analysis and development-assistance tool**.
 
-29. SECURITY DISCLAIMER
------------------------
+Static analysis and automated remediation cannot guarantee that a smart contract is secure.
 
-Smart Contract FixGPT is an automated security-assistance tool.
+Generated fixes may change business logic or introduce assumptions that require additional review.
 
-It should not be considered a replacement for:
+Contracts handling real assets should receive a professional manual security audit and appropriate testing before deployment.
 
-- Professional smart contract audits
-- Formal verification
-- Comprehensive testing
-- Manual security review
-- Economic and protocol-level analysis
+---
 
-Generated remediation code should be reviewed, compiled, tested and
-independently validated before being deployed to a production blockchain
-environment.
+# 👨‍💻 Author
 
+**Mothe Anurag Reddy**
 
-30. PROJECT OUTCOME
--------------------
+B.Tech Computer Science & Engineering
 
-Smart Contract FixGPT demonstrates how a full-stack Web3 security
-application can combine:
+Sreenidhi Institute of Science and Technology
 
-    Solidity
-        +
-    AST Analysis
-        +
-    Security Detectors
-        +
-    Backend Services
-        +
-    AI-Assisted Remediation
-        +
-    Fix Verification
-        +
-    React Dashboard
+EtherAuthority Web3 Internship
 
-The resulting workflow helps developers identify potential vulnerabilities,
-understand their security impact, explore remediation options, and verify
-proposed fixes through re-analysis.
+GitHub: https://github.com/anuragreddy23-dot
 
+LinkedIn: https://www.linkedin.com/in/anuragreddy-mothe-21a699329
 
-31. INTERNSHIP PROJECT INFORMATION
-----------------------------------
+---
 
-Project Name:
-    Smart Contract FixGPT AI Tool
+# 🙏 Acknowledgements
 
-Domain:
-    Web3 / Blockchain Security
+Special thanks to:
 
-Project Type:
-    Full-Stack Web3 Security Application
-
-Focus:
-    Smart Contract Security Analysis and AI-Assisted Remediation
-
-Primary Technologies:
-    Solidity, JavaScript, TypeScript, React, Node.js, Express,
-    AST-based Static Analysis
-
-Core Concept:
-    Detect -> Explain -> Fix -> Re-Analyze -> Report
-
-Developed as part of a Web3 and Blockchain Development internship.
-
-
-32. AUTHOR
-----------
-
-Anurag Reddy
-
-B.Tech - Computer Science and Engineering
-
-Areas of Interest:
-- Web3
-- Blockchain Security
+- EtherAuthority
 - Solidity
-- Smart Contract Development
-- Smart Contract Auditing
+- React
+- Vite
+- Node.js
+- Express
+- OpenZeppelin
+- Solidity Parser ecosystem
+- Web3 and smart contract security community
 
+for providing the tools, frameworks, and learning resources used during the development of this project.
 
-LICENSE
--------
+---
 
-This project is intended for educational, research and internship purposes.
+# 📄 License
+
+This project was developed as part of the **EtherAuthority Web3 Internship Program** for educational and learning purposes.
+
+Licensed under the **MIT License**.
