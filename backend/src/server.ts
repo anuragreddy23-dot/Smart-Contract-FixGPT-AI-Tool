@@ -23,6 +23,6 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/audit", auditRouter);
 
-app.listen(PORT, () => {
-  console.log(`FixGPT backend running on http://localhost:${PORT}`);
+app.listen(Number(PORT), "0.0.0.0", () => {
+  console.log(`FixGPT backend running on port ${PORT}`);
 });
