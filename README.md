@@ -768,7 +768,7 @@ https://drive.google.com/file/d/1IR1IJtU9ex0eqr90rvVDLxBGAV7PuIEI/view?usp=shari
 | Documentation | ✅ Completed |
 | GitHub Publication | ✅ Completed |
 | Internship Project | ✅ Completed |
-| Demo Video | ⏳ Add Link |
+| Demo Video | ✅ Completed |
 
 ---
 
