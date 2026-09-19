@@ -744,8 +744,8 @@ Record a short demonstration covering:
 
 ```text
 
-```
 https://drive.google.com/file/d/1IR1IJtU9ex0eqr90rvVDLxBGAV7PuIEI/view?usp=sharing
+```
 ---
 
 # 📋 Internship Requirements Completed
