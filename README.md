@@ -709,6 +709,21 @@ docs/screenshots/
 ```md
 ![Invalid Solidity](docs/screenshots/invalid-contract.png)
 ```
+## 🚀 Live Deployment
+
+### Frontend
+🌐 **Live Application:**  
+https://smart-contract-fix-gpt-ai-tool.vercel.app/
+
+### Backend
+⚙️ **Backend API:**  
+https://smart-contract-fixgpt-ai-tool.onrender.com/
+
+### Backend Health Check
+🩺 **API Health:**  
+https://smart-contract-fixgpt-ai-tool.onrender.com/api/health
+
+> The frontend is deployed on Vercel and the backend API is deployed on Render.
 
 ---
 
@@ -728,9 +743,9 @@ Record a short demonstration covering:
 ### Demo Video Link
 
 ```text
-Add your demo video link here
-```
 
+```
+https://drive.google.com/file/d/1IR1IJtU9ex0eqr90rvVDLxBGAV7PuIEI/view?usp=sharing
 ---
 
 # 📋 Internship Requirements Completed
