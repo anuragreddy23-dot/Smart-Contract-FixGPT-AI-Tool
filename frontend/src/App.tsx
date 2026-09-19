@@ -114,7 +114,9 @@ contract Example {
 
 const HISTORY_STORAGE_KEY =
   "fixgpt_audit_history";
-
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://127.0.0.1:5000";
 function App() {
   const [contractName, setContractName] =
     useState("Example");
@@ -299,7 +301,7 @@ function App() {
 
       const response =
         await axios.post<AuditResponse>(
-          "/api/audit",
+          `${API_BASE_URL}/api/audit`,
           {
             contractName:
               detectedName,
